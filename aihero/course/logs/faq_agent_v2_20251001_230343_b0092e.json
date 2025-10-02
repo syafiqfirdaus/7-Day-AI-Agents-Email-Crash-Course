@@ -1,0 +1,190 @@
+{
+  "agent_name": "faq_agent_v2",
+  "system_prompt": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "How does PySpark handle the difference between two TimestampType values, and how can I convert that to hours?",
+          "timestamp": "2025-10-01T23:03:41.918017+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\": \"PySpark handle difference between two TimestampType values\"}",
+          "tool_call_id": "call_P4mBIgt8kv5J5OQorCZMYwb2",
+          "part_kind": "tool-call"
+        },
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\": \"convert TimestampType to hours PySpark\"}",
+          "tool_call_id": "call_cFb6XGOg0yikLcmioBa9nzpV",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 233,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 58,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-01T23:03:42+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "tool_calls"
+      },
+      "provider_response_id": "chatcmpl-CM09Gcopg9HyWqyxneIREgAQJfJX7",
+      "finish_reason": "tool_call"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "id": "1da0437718",
+              "question": "Homework: how to convert the time difference of two timestamps to hours",
+              "sort_order": 53,
+              "content": "Pyspark converts the difference of two `TimestampType` values to Python's native `datetime.timedelta` object. The `timedelta` object stores the duration in terms of days, seconds, and microseconds. Each of these units must be manually converted into hours to express the total duration between the two timestamps using only hours.\n\nAnother method to achieve this is using the `datediff` SQL function. It requires the following parameters:\n\n- **Upper Date**: The closer date, e.g., `dropoff_datetime`.\n- **Lower Date**: The farther date, e.g., `pickup_datetime`.\n\nThe result is returned in days, so you can multiply the result by 24 to get the duration in hours.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/053_1da0437718_homework-how-to-convert-the-time-difference-of-two.md"
+            },
+            {
+              "id": "78fda262c6",
+              "question": "How does dbt handle dependencies between models?",
+              "sort_order": 79,
+              "content": "Dbt provides a mechanism called `ref` to manage dependencies between models. By referencing other models using the `ref` keyword in SQL, dbt automatically understands the dependencies and ensures the correct execution order.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-4/079_78fda262c6_how-does-dbt-handle-dependencies-between-models.md"
+            },
+            {
+              "id": "84f10086ab",
+              "question": "Import pyspark - Error: No Module named \u2018pyspark\u2019",
+              "sort_order": 7,
+              "content": "Ensure that your `PYTHONPATH` is set correctly to include the PySpark library. You can check if PySpark is pointing to the correct location by running:\n\n```python\nimport pyspark\n\nprint(pyspark.__file__)\n```\n\nIt should point to the location where PySpark is installed (e.g., `/home/<your username>/spark/spark-3.x.x-bin-hadoop3.x/python/pyspark/__init__.py`).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/007_84f10086ab_import-pyspark-error-no-module-named-pyspark.md"
+            },
+            {
+              "id": "c2a18da218",
+              "question": "GCP BQ: Error Message in BigQuery: annotated as a valid Timestamp, please annotate it as TimestampType(MICROS) or TimestampType(MILLIS)",
+              "sort_order": 15,
+              "content": "When you encounter this BigQuery error, it typically relates to how timestamps are stored in Parquet files.\n\n### Solution:\n\nTo resolve this issue, you can modify the Parquet writing configuration by adding `use_deprecated_int96_timestamps=True` to the `pq.write_to_dataset` function. This setting writes timestamps in the INT96 format, which can be more compatible with BigQuery.\n\nHere\u2019s how you can adjust the function:\n\n```python\npq.write_to_dataset(\n    table,\n    root_path=root_path,\n    filesystem=gcs,\n    use_deprecated_int96_timestamps=True  # Write timestamps to INT96 Parquet format\n)\n```\n\n### References\n\n- [Stack Overflow - Parquet compatibility with PyArrow vs PySpark](https://stackoverflow.com/questions/48314880/are-parquet-file-created-with-pyarrow-vs-pyspark-compatible)\n- [Stack Overflow - Editing Parquet files and datetime format errors](https://stackoverflow.com/questions/57798479/editing-parquet-files-with-python-causes-errors-to-datetime-format)\n- [Reddit - Parquet Timestamp to BQ issues](https://www.reddit.com/r/bigquery/comments/16aoq0u/parquet_timestamp_to_bq_coming_across_as_int/?share_id=YXqCs5Jl6hQcw-kg6-VgF&utm_content=1&utm_medium=ios_app&utm_name=ioscss&utm_source=share&utm_term=1)\n\nUse the above configuration to ensure compatibility with Google BigQuery when dealing with timestamps in Parquet files.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-3/015_c2a18da218_gcp-bq-error-message-in-bigquery-annotated-as-a-va.md"
+            },
+            {
+              "id": "b3bb998ae2",
+              "question": "How to connect Pyspark with BigQuery?",
+              "sort_order": 13,
+              "content": "To connect Pyspark with BigQuery, include the following line in the Pyspark configuration:\n\n```python\n# Example initialization of SparkSession variable\n\nspark = (SparkSession.builder\n\n    .master(\"...\")\n    .appName(\"...\")\n    \n    # Add the following configuration\n    .config(\"spark.jars.packages\", \"com.google.cloud.spark:spark-3.5-bigquery:0.37.0\")\n)\n```",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/project/013_b3bb998ae2_how-to-connect-pyspark-with-bigquery.md"
+            }
+          ],
+          "tool_call_id": "call_P4mBIgt8kv5J5OQorCZMYwb2",
+          "metadata": null,
+          "timestamp": "2025-10-01T23:03:43.472378+00:00",
+          "part_kind": "tool-return"
+        },
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "id": "1da0437718",
+              "question": "Homework: how to convert the time difference of two timestamps to hours",
+              "sort_order": 53,
+              "content": "Pyspark converts the difference of two `TimestampType` values to Python's native `datetime.timedelta` object. The `timedelta` object stores the duration in terms of days, seconds, and microseconds. Each of these units must be manually converted into hours to express the total duration between the two timestamps using only hours.\n\nAnother method to achieve this is using the `datediff` SQL function. It requires the following parameters:\n\n- **Upper Date**: The closer date, e.g., `dropoff_datetime`.\n- **Lower Date**: The farther date, e.g., `pickup_datetime`.\n\nThe result is returned in days, so you can multiply the result by 24 to get the duration in hours.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/053_1da0437718_homework-how-to-convert-the-time-difference-of-two.md"
+            },
+            {
+              "id": "84f10086ab",
+              "question": "Import pyspark - Error: No Module named \u2018pyspark\u2019",
+              "sort_order": 7,
+              "content": "Ensure that your `PYTHONPATH` is set correctly to include the PySpark library. You can check if PySpark is pointing to the correct location by running:\n\n```python\nimport pyspark\n\nprint(pyspark.__file__)\n```\n\nIt should point to the location where PySpark is installed (e.g., `/home/<your username>/spark/spark-3.x.x-bin-hadoop3.x/python/pyspark/__init__.py`).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/007_84f10086ab_import-pyspark-error-no-module-named-pyspark.md"
+            },
+            {
+              "id": "a411de5004",
+              "question": "Office Hours: I can\u2019t attend the \u201cOffice hours\u201d / workshop, will it be recorded?",
+              "sort_order": 12,
+              "content": "Yes! Every \"Office Hours\" will be recorded and available a few minutes after the live session is over; so you can view (or rewatch) whenever you want.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/general/012_a411de5004_office-hours-i-cant-attend-the-office-hours-worksh.md"
+            },
+            {
+              "id": "b3bb998ae2",
+              "question": "How to connect Pyspark with BigQuery?",
+              "sort_order": 13,
+              "content": "To connect Pyspark with BigQuery, include the following line in the Pyspark configuration:\n\n```python\n# Example initialization of SparkSession variable\n\nspark = (SparkSession.builder\n\n    .master(\"...\")\n    .appName(\"...\")\n    \n    # Add the following configuration\n    .config(\"spark.jars.packages\", \"com.google.cloud.spark:spark-3.5-bigquery:0.37.0\")\n)\n```",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/project/013_b3bb998ae2_how-to-connect-pyspark-with-bigquery.md"
+            },
+            {
+              "id": "c2a18da218",
+              "question": "GCP BQ: Error Message in BigQuery: annotated as a valid Timestamp, please annotate it as TimestampType(MICROS) or TimestampType(MILLIS)",
+              "sort_order": 15,
+              "content": "When you encounter this BigQuery error, it typically relates to how timestamps are stored in Parquet files.\n\n### Solution:\n\nTo resolve this issue, you can modify the Parquet writing configuration by adding `use_deprecated_int96_timestamps=True` to the `pq.write_to_dataset` function. This setting writes timestamps in the INT96 format, which can be more compatible with BigQuery.\n\nHere\u2019s how you can adjust the function:\n\n```python\npq.write_to_dataset(\n    table,\n    root_path=root_path,\n    filesystem=gcs,\n    use_deprecated_int96_timestamps=True  # Write timestamps to INT96 Parquet format\n)\n```\n\n### References\n\n- [Stack Overflow - Parquet compatibility with PyArrow vs PySpark](https://stackoverflow.com/questions/48314880/are-parquet-file-created-with-pyarrow-vs-pyspark-compatible)\n- [Stack Overflow - Editing Parquet files and datetime format errors](https://stackoverflow.com/questions/57798479/editing-parquet-files-with-python-causes-errors-to-datetime-format)\n- [Reddit - Parquet Timestamp to BQ issues](https://www.reddit.com/r/bigquery/comments/16aoq0u/parquet_timestamp_to_bq_coming_across_as_int/?share_id=YXqCs5Jl6hQcw-kg6-VgF&utm_content=1&utm_medium=ios_app&utm_name=ioscss&utm_source=share&utm_term=1)\n\nUse the above configuration to ensure compatibility with Google BigQuery when dealing with timestamps in Parquet files.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-3/015_c2a18da218_gcp-bq-error-message-in-bigquery-annotated-as-a-va.md"
+            }
+          ],
+          "tool_call_id": "call_cFb6XGOg0yikLcmioBa9nzpV",
+          "metadata": null,
+          "timestamp": "2025-10-01T23:03:43.472721+00:00",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "content": "In PySpark, the difference between two `TimestampType` values is handled using Python's native `datetime.timedelta` object. This object represents the duration between two timestamps in terms of days, seconds, and microseconds. To convert this duration to hours, you can manually calculate the total duration by converting days to hours and adding the hours derived from seconds.\n\nHere's how you can do the conversion:\n\n1. Calculate the difference between two timestamps, which yields a `timedelta` object.\n2. Convert the days and seconds from the `timedelta` object to hours. You can do this using:\n   - Total hours = (days * 24) + (seconds / 3600)\n\nAlternatively, you can also use the `datediff` SQL function to get the difference in days and subsequently multiply the result by 24 to convert it to hours. Here\u2019s the method:\n\n- Use the `datediff` function:\n  - **Upper Date (closer date)**: e.g., `dropoff_datetime`\n  - **Lower Date (farther date)**: e.g., `pickup_datetime`\n  \nThis function returns the difference in days, which you can then convert to hours by multiplying by 24.\n\nFor example:\n```python\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, datediff\n\nspark = SparkSession.builder.appName(\"Timestamp Difference\").getOrCreate()\n\n# Assume df is your DataFrame with two TimestampType columns\ndf.withColumn(\"hour_difference\", datediff(col(\"dropoff_datetime\"), col(\"pickup_datetime\")) * 24).show()\n```\n\nFor additional details, you can refer to the source material: [Homework: how to convert the time difference of two timestamps to hours](https://github.com/DataTalksClub/faq/blob/main/_questions/data-engineering-zoomcamp/module-5/053_1da0437718_homework-how-to-convert-the-time-difference-of-two.md).",
+          "id": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 2616,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 401,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-01T23:03:43+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "stop"
+      },
+      "provider_response_id": "chatcmpl-CM09HgGwij6q14lui80pQyvpl3x8J",
+      "finish_reason": "stop"
+    }
+  ],
+  "source": "ai-generated"
+}

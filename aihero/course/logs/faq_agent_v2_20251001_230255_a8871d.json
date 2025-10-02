@@ -1,0 +1,133 @@
+{
+  "agent_name": "faq_agent_v2",
+  "system_prompt": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "How can I improve the audio quality of the lectures in this course?",
+          "timestamp": "2025-10-01T23:02:52.842586+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"improve audio quality lectures\"}",
+          "tool_call_id": "call_WFUgknbUCkIaPBWylYeKKm7B",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 225,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 18,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-01T23:02:54+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "tool_calls"
+      },
+      "provider_response_id": "chatcmpl-CM08UD5UxJOpoRptWOAOawt0hiBoX",
+      "finish_reason": "tool_call"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "id": "348f696873",
+              "question": "Kafka: Python videos have low audio and are hard to follow up",
+              "sort_order": 10,
+              "content": "To improve the audio quality:\n\n- **Download the videos** and use VLC media player. You can set the audio to 200% of the original volume for better sound quality.\n- Alternatively, **use auto-generated captions** directly on YouTube for better clarity.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-6/010_348f696873_kafka-python-videos-have-low-audio-and-are-hard-to.md"
+            },
+            {
+              "id": "721f9e0c29",
+              "question": "How can we contribute to the course?",
+              "sort_order": 35,
+              "content": "- [Star the repository](https://github.com/DataTalksClub/data-engineering-zoomcamp).\n- Share it with friends if you find it useful.\n- Create a pull request (PR) if you can improve the text or structure of the repository.\n- [Update this FAQ](https://github.com/DataTalksClub/faq/).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/general/035_721f9e0c29_how-can-we-contribute-to-the-course.md"
+            },
+            {
+              "id": "8248dd9d7f",
+              "question": "GCP BQ: When trying to cluster by DATE(tpep_pickup_datetime) it gives an error: Entries in the CLUSTER BY clause must be column names",
+              "sort_order": 27,
+              "content": "No need to convert as you can cluster by a TIMESTAMP column directly in BigQuery. BigQuery supports clustering on TIMESTAMP, DATE, DATETIME, STRING, INT64, and BOOL types.\n\nClustering sorts data based on the timestamp to optimize queries with filters like `WHERE tpep_pickup_datetime BETWEEN ...`, rather than creating discrete partitions.\n\nIf your goal is to improve performance for time-based queries, combining partitioning by `DATE(event_time)` and clustering by `tpep_pickup_datetime` is a good approach.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-3/027_8248dd9d7f_gcp-bq-when-trying-to-cluster-by-datetpep_pickup_d.md"
+            },
+            {
+              "id": "513410225e",
+              "question": "GCP: Virtual Machine (VM) Size, Slow, Clean Up",
+              "sort_order": 103,
+              "content": "If you are progressing through the course and find that your VM is starting to become slow, you can run the following commands to inspect and detect areas where you can improve:\n\n**Recommended VM Size**\n\n- Start with a 60GB machine. A 30GB machine may not be sufficient, as you might need to restart the project with a larger size.\n\n**Commands to Inspect the Health of Your VM**\n\n- **System Resource Usage**\n  \n  ```bash\n  top\n  htop\n  ```\n  Shows real-time information about system resource usage, including CPU, memory, and processes.\n\n  ```bash\n  free -h\n  ```\n  Displays information about system memory usage and availability.\n\n  ```bash\n  df -h\n  ```\n  Shows disk space usage of file systems.\n\n  ```bash\n  du -h <directory>\n  ```\n  Displays disk usage of a specific directory.\n\n- **Running Processes**\n  \n  ```bash\n  ps aux\n  ```\n  Lists all running processes along with detailed information.\n\n- **Network**\n  \n  ```bash\n  ifconfig\n  ip addr show\n  ```\n  Shows network interface configuration.\n\n  ```bash\n  netstat -tuln\n  ```\n  Displays active network connections and listening ports.\n\n- **Hardware Information**\n  \n  ```bash\n  lscpu\n  ```\n  Displays CPU information.\n\n  ```bash\n  lsblk\n  ```\n  Lists block devices (disks and partitions).\n\n  ```bash\n  lshw\n  ```\n  Lists hardware configuration.\n\n- **User and Permissions**\n  \n  ```bash\n  who\n  ```\n  Shows who is logged on and their activities.\n\n  ```bash\n  w\n  ```\n  Displays information about currently logged-in users and their processes.\n\n- **Package Management**\n  \n  ```bash\n  apt list --installed\n  ```\n  Lists installed packages (for Ubuntu and Debian-based systems).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/103_513410225e_gcp-virtual-machine-vm-size-slow-clean-up.md"
+            }
+          ],
+          "tool_call_id": "call_WFUgknbUCkIaPBWylYeKKm7B",
+          "metadata": null,
+          "timestamp": "2025-10-01T23:02:54.746873+00:00",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "content": "To improve the audio quality of the lectures in the course, you can try the following methods:\n\n1. **Download and Playback**: Download the videos and use **VLC media player**. This player allows you to set the audio volume to **200%** of the original, which can help in enhancing the sound quality.\n\n2. **Use Auto-generated Captions**: You can enable the **auto-generated captions** directly on YouTube as a way to improve clarity and understanding of the content.\n\nThese tips can help mitigate issues with low audio levels in the lectures you've encountered. \n\nReference: [Kafka: Python videos have low audio and are hard to follow up](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-6/010_348f696873_kafka-python-videos-have-low-audio-and-are-hard-to.md)",
+          "id": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 1267,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 185,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-01T23:02:55+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "stop"
+      },
+      "provider_response_id": "chatcmpl-CM08VztFU8MS3kpSAuWFzl8Ky9Vwi",
+      "finish_reason": "stop"
+    }
+  ],
+  "source": "ai-generated"
+}

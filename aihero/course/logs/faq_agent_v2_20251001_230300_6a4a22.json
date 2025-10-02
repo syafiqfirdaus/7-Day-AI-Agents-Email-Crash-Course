@@ -1,0 +1,140 @@
+{
+  "agent_name": "faq_agent_v2",
+  "system_prompt": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "text_search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What should I check if my PYTHONPATH isn't set correctly for PySpark?",
+          "timestamp": "2025-10-01T23:02:58.323141+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "args": "{\"query\":\"PYTHONPATH not set correctly for PySpark\"}",
+          "tool_call_id": "call_4oWjUVmCYO9k2wkUaWG0EGXn",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 227,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 22,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-01T23:02:59+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "tool_calls"
+      },
+      "provider_response_id": "chatcmpl-CM08ZXXYpEPAiVhnSfIRQaJLswa2L",
+      "finish_reason": "tool_call"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "text_search",
+          "content": [
+            {
+              "id": "84f10086ab",
+              "question": "Import pyspark - Error: No Module named \u2018pyspark\u2019",
+              "sort_order": 7,
+              "content": "Ensure that your `PYTHONPATH` is set correctly to include the PySpark library. You can check if PySpark is pointing to the correct location by running:\n\n```python\nimport pyspark\n\nprint(pyspark.__file__)\n```\n\nIt should point to the location where PySpark is installed (e.g., `/home/<your username>/spark/spark-3.x.x-bin-hadoop3.x/python/pyspark/__init__.py`).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/007_84f10086ab_import-pyspark-error-no-module-named-pyspark.md"
+            },
+            {
+              "id": "e4654d1d0b",
+              "question": "Export PYTHONPATH command in Linux is temporary",
+              "sort_order": 32,
+              "content": "To make the `export PYTHONPATH` command permanent, consider the following options:\n\n1. **Add to `.bashrc`:** \n   - Open the `.bashrc` file located in your home directory using a text editor, such as `nano` or `vim`.\n   \n   ```bash\n   nano ~/.bashrc\n   ```\n   \n   - Add the `export PYTHONPATH` line, such as:\n   \n   ```bash\n   export PYTHONPATH=\"/your/custom/path\"\n   ```\n   \n   - Save the changes and source the file to apply the changes:\n   \n   ```bash\n   source ~/.bashrc\n   ```\n\n2. **Run specific commands in Python scripts:**\n   - You can initialize the environment directly in a Python script using:\n   \n   ```python\n   import findspark\n   findspark.init()\n   ```\n\nBy using these methods, you ensure that the `PYTHONPATH` is set up for every session automatically.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/032_e4654d1d0b_export-pythonpath-command-in-linux-is-temporary.md"
+            },
+            {
+              "id": "efa85f71b6",
+              "question": "Env variables set in ~/.bashrc are not loaded to Jupyter in VS Code",
+              "sort_order": 41,
+              "content": "I added `PYTHONPATH`, `JAVA_HOME`, and `SPARK_HOME` to `~/.bashrc`. Importing `pyspark` worked in iPython in the terminal but couldn't be found in a `.ipynb` file opened in VS Code.\n\nAfter adding new lines to `~/.bashrc`, you need to restart the shell to activate the changes. You can do either of the following:\n\n```bash\nsource ~/.bashrc\n```\n\nor\n\n```bash\nexec bash\n```\n\nInstead of configuring paths in `~/.bashrc`, you can create a `.env` file in the root of your workspace with the following content:\n\n```bash\nJAVA_HOME=\"${HOME}/app/java/jdk-11.0.2\"\n\nPATH=\"${JAVA_HOME}/bin:${PATH}\"\n\nSPARK_HOME=\"${HOME}/app/spark/spark-3.3.2-bin-hadoop3\"\n\nPATH=\"${SPARK_HOME}/bin:${PATH}\"\n\nPYTHONPATH=\"${SPARK_HOME}/python/:$PYTHONPATH\"\n\nPYTHONPATH=\"${SPARK_HOME}/python/lib/py4j-0.10.9.5-src.zip:$PYTHONPATH\"\n\nPYTHONPATH=\"${SPARK_HOME}/python/lib/pyspark.zip:$PYTHONPATH\"\n```",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/041_efa85f71b6_env-variables-set-in-bashrc-are-not-loaded-to-jupy.md"
+            },
+            {
+              "id": "d5d38534f6",
+              "question": "PySpark: TypeError: code() argument 13 must be str, not int, while executing `import pyspark`  (Windows/ Spark 3.0.3 - Python 3.11)",
+              "sort_order": 6,
+              "content": "This error occurs because Python 3.11 has some inconsistencies with the older Spark 3.0.3 version.\n\n### Solutions:\n\n1. **Downgrade Python Version:**\n   - Use Python 3.9. A conda environment can help in managing different Python versions.\n\n2. **Upgrade PySpark Version:**\n   - Install a newer PySpark version, such as 3.5.1 or above, which is compatible with Python 3.11.\n\n```bash\n# Example commands\nconda create -n pyspark_env python=3.9\nconda activate pyspark_env\npip install pyspark==3.5.1\n```\n\nEnsure that your environment is set up correctly to avoid version mismatches.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/006_d5d38534f6_pyspark-typeerror-code-argument-13-must-be-str-not.md"
+            },
+            {
+              "id": "d87bb0e38f",
+              "question": "Py4JJavaError - ModuleNotFoundError: No module named 'py4j' while executing `import pyspark`",
+              "sort_order": 13,
+              "content": "To resolve the `ModuleNotFoundError: No module named 'py4j'` when executing `import pyspark`, follow these steps:\n\n1. **Check for Py4J File Version:**\n   - Run the command:\n     ```bash\n     ls ${SPARK_HOME}/python/lib/\n     ```\n   - Note the version of the `py4j` file.\n\n2. **Update the `PYTHONPATH`:**\n   - Use the version identified above to update the `PYTHONPATH` accordingly. For example:\n     ```bash\n     export PYTHONPATH=\"${SPARK_HOME}/python/lib/py4j-0.10.9.3-src.zip:$PYTHONPATH\"\n     ```\n   - Ensure that the version matches the filename under `${SPARK_HOME}/python/lib/`.\n\n3. **Verify Spark's Py4J Version:**\n   - Check the Py4J version of the Spark you're using from the [Apache Spark documentation](https://spark.apache.org/docs/latest/api/python/getting_started/install.html).\n\n4. **Install Py4J (if needed):**\n   - If the above steps do not resolve the issue, run:\n     ```bash\n     pip install py4j\n     ```\n   - This can resolve version mismatches or missing installations.\n\nThis should address the `ModuleNotFoundError` for Py4J when using PySpark. Ensure all versions are consistent and correct.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/013_d87bb0e38f_py4jjavaerror-modulenotfounderror-no-module-named.md"
+            }
+          ],
+          "tool_call_id": "call_4oWjUVmCYO9k2wkUaWG0EGXn",
+          "metadata": null,
+          "timestamp": "2025-10-01T23:02:59.819696+00:00",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": "You are a helpful assistant for a course.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.  \nWhen citing the reference, replace \"faq-main\" by the full path to the GitHub repository: \"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "content": "If your `PYTHONPATH` isn't set correctly for PySpark, you should check the following:\n\n1. **PYTHONPATH Setting**: Ensure that your `PYTHONPATH` includes the PySpark library. You can do this by running the following Python code to see the path:\n\n    ```python\n    import pyspark\n    print(pyspark.__file__)\n    ```\n\n   This should point to the PySpark installation location, e.g., `/home/<your username>/spark/spark-3.x.x-bin-hadoop3.x/python/pyspark/__init__.py` ([source](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-5/007_84f10086ab_import-pyspark-error-no-module-named-pyspark.md)).\n\n2. **Make PYTHONPATH Permanent**: If you need to set `PYTHONPATH` permanently, consider adding it to your `.bashrc` file in your home directory. Open the file in a text editor and add the following line:\n\n    ```bash\n    export PYTHONPATH=\"/your/custom/path\"\n    ```\n\n   After editing, source the file to apply changes:\n\n    ```bash\n    source ~/.bashrc\n    ```\n   This will ensure that the `PYTHONPATH` is set correctly for every session ([source](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-5/032_e4654d1d0b_export-pythonpath-command-in-linux-is-temporary.md)).\n\n3. **Environment Variables in Jupyter Notebooks**: If you're using Jupyter notebooks and have set your environment variables in `~/.bashrc`, remember to restart the shell or the Jupyter server to pick up those changes. Alternatively, consider using a `.env` file in your workspace to set environment variables directly ([source](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-5/041_efa85f71b6_env-variables-set-in-bashrc-are-not-loaded-to-jupy.md)).\n\n4. **Check Spark and Py4J Installation**: If you're still having issues, ensure that both PySpark and Py4J are installed correctly. You might need to check that the version of Py4J matches the version used in Spark ([source](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-5/013_d87bb0e38f_py4jjavaerror-modulenotfounderror-no-module-named.md)). \n\nFollowing these steps should help you debug and fix any issues with your `PYTHONPATH` related to PySpark.",
+          "id": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 1764,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 577,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-01T23:03:00+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "stop"
+      },
+      "provider_response_id": "chatcmpl-CM08a56rE3Nw8QTVUCbYWRaeALrXc",
+      "finish_reason": "stop"
+    }
+  ],
+  "source": "ai-generated"
+}
