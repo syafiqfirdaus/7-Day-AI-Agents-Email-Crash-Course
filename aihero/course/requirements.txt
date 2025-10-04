@@ -1,10 +1,12 @@
 streamlit
-pydantic-ai
-pydantic-ai-slim[openai]
 PyGithub
 chromadb
 sentence-transformers
 openai
+numpy
+pandas
 minsearch>=0.0.5
 python-frontmatter>=1.1.0
-requests>=2.32.5
+requests>=2.32.3
+pydantic>=2.0.0
+pydantic-ai-slim[openai]>=0.0.14
