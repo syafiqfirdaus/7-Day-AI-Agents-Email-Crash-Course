@@ -3,7 +3,11 @@ import asyncio
 
 import ingest
 import search_agent
-from logs import log_interaction_to_file
+# Make sure logs.py defines log_interaction_to_file, or update the import to the correct function name
+# Example: from logs import log_interaction_to_file
+# If the function is named differently, update as follows:
+# from logs import correct_function_name
+from logs import log_interaction_to_file  # Ensure logs.py defines this function
 
 
 # --- Initialization ---
