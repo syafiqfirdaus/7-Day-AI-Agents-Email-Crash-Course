@@ -11,3 +11,4 @@ requests>=2.32.3
 pydantic>=2.0.0
 httpx
 pydantic-ai-slim
+pydantic-ai
