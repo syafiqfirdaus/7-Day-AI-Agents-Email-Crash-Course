@@ -1,5 +1,35 @@
-import streamlit as st
-import asyncio
+import sys
+import os
+
+import sys
+import os
+
+# Force reinstall pydantic-ai if not found (best-effort). This runs once at import
+# time when the module is missing. Streamlit deploys should install requirements,
+# but this helps in case of transient missing package during startup.
+try:
+    import pydantic_ai
+except Exception:
+    try:
+        import subprocess
+        import site
+        subprocess.check_call([
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--upgrade",
+            "pydantic-ai-slim[openai]",
+        ])
+        # Reload site packages so that newly installed packages are importable
+        import importlib
+
+        importlib.reload(site)
+        import pydantic_ai  # try import again
+    except Exception:
+        # If installation fails, continue — Streamlit will show the original ImportError
+        pass
+
 import streamlit as st
 import asyncio
 import os
@@ -20,6 +50,7 @@ from logs import log_interaction_to_file  # Ensure logs.py defines this function
 #
 # [whitelist]
 # emails = ["alice@example.com", "bob@example.com"]
+
 #
 
 def is_whitelisted(email: str) -> bool:
