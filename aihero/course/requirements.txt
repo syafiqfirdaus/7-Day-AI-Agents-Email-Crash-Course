@@ -5,10 +5,8 @@ sentence-transformers
 openai
 numpy
 pandas
-minsearch>=0.0.5
-python-frontmatter>=1.1.0
-requests>=2.32.3
-pydantic>=2.0.0
-httpx
+minsearch
+python-frontmatter
+requests
+pydantic
 pydantic-ai-slim
-pydantic-ai
