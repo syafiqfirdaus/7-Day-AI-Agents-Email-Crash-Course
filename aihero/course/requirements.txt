@@ -1,0 +1,12 @@
+streamlit
+PyGithub
+chromadb
+sentence-transformers
+openai
+numpy
+pandas
+minsearch
+python-frontmatter
+requests
+pydantic
+pydantic-ai-slim

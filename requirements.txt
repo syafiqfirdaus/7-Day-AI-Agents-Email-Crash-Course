@@ -1,5 +1,14 @@
-pydantic-ai
+streamlit
+PyGithub
+chromadb
+sentence-transformers
+openai
+numpy
+pandas
 minsearch>=0.0.5
-openai>=1.109.1
 python-frontmatter>=1.1.0
-requests>=2.32.5
+requests>=2.32.3
+pydantic>=2.0.0
+httpx
+pydantic-ai-slim
+pydantic-ai
