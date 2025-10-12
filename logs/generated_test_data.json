@@ -1,0 +1,28 @@
+{
+  "questions": [
+    "How can I fix the Docker error related to configuration settings?",
+    "Can I partition more than one column in BigQuery tables?",
+    "What mounting path should I use for PostgreSQL in Docker?",
+    "Where should I place my SSH config file in my file system?",
+    "How do I configure the Spark BigQuery connector automatically?",
+    "What data types should be used to avoid schema inconsistency issues in BigQuery?",
+    "What should I do if my data loading process is too slow when using a script for yellow taxi data?",
+    "How do I install Java and Spark using SDKMAN for my project?",
+    "What Python version is compatible with Spark 3.0.3 to avoid inconsistencies?",
+    "Can I create an external table in BigQuery using Parquet files stored in a GCP Bucket?"
+  ],
+  "log_files": [
+    "logs/gh_agent_20251012_053857_86df26.json",
+    "logs/gh_agent_20251012_053909_298bad.json",
+    "logs/gh_agent_20251012_053913_c60060.json",
+    "logs/gh_agent_20251012_053926_e5e7bf.json",
+    "logs/gh_agent_20251012_053935_d3547e.json",
+    "logs/gh_agent_20251012_053942_8fa6b7.json",
+    "logs/gh_agent_20251012_053953_d9cc34.json",
+    "logs/gh_agent_20251012_054004_9cff77.json",
+    "logs/gh_agent_20251012_054013_03188f.json",
+    "logs/gh_agent_20251012_054020_b6a8aa.json"
+  ],
+  "num_samples": 10,
+  "generated_at": "2025-10-12T13:46:35.092176"
+}

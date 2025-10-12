@@ -1,0 +1,142 @@
+{
+  "agent_name": "gh_agent",
+  "system_prompt": [
+    "\nYou are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.\n"
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What mounting path should I use for PostgreSQL in Docker?",
+          "timestamp": "2025-10-12T05:39:11.832896+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": "You are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "search",
+          "args": "{\"query\":\"PostgreSQL Docker mounting path\"}",
+          "tool_call_id": "call_p4mLpQHHE2PX8c3Pp3ASURvF",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 214,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 18,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-12T05:39:12+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "tool_calls"
+      },
+      "provider_response_id": "chatcmpl-CPj5UMEff8nd2BgBd19cJoTEBRxke",
+      "finish_reason": "tool_call"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "search",
+          "content": [
+            {
+              "id": "3f1c2f93bd",
+              "question": "Docker-Compose: mounting error",
+              "sort_order": 37,
+              "content": "```\nerror: could not change permissions of directory \"/var/lib/postgresql/data\": Operation not permitted\n```\n\nIf you have used the previous answer and created a local Docker volume, then you need to inform the compose file about the named volume:\n\n```yaml\ndtc_postgres_volume_local:  # Define the named volume here\n```\n\n- Services mentioned in the compose file automatically become part of the same network.\n\n### Steps:\n\n1. Use the command:\n   ```bash\n   docker volume inspect dtc_postgres_volume_local\n   ```\n   to see the location by checking the value of `Mountpoint`.\n\n2. In some cases, after running `docker compose up`, the mounting directory created is named `docker_sql_dtc_postgres_volume_local` instead of the existing `dtc_postgres_volume_local`.\n\n3. Rename the existing `dtc_postgres_volume_local` to `docker_sql_dtc_postgres_volume_local`:\n   - Be careful when performing this operation.\n\n4. Remove the newly created one.\n\n5. Run `docker compose up` again and check if the table is there.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/037_3f1c2f93bd_docker-compose-mounting-error.md"
+            },
+            {
+              "id": "fb9fab513f",
+              "question": "Docker: Error response from daemon: invalid mode: \\Program Files\\Git\\var\\lib\\postgresql\\data.",
+              "sort_order": 23,
+              "content": "Change the mounting path. Replace it with one of the following:\n\n```bash\n-v /e/zoomcamp/...:/var/lib/postgresql/data\n```\nOr\n\n```bash\n-v /c:/.../ny_taxi_postgres_data:/var/lib/postgresql/data\n```\n\n(Note: Include a leading slash in front of `c:`)",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/023_fb9fab513f_docker-error-response-from-daemon-invalid-mode-pro.md"
+            },
+            {
+              "id": "3e83372387",
+              "question": "Docker: invalid reference format: repository name must be lowercase (Mounting volumes with Docker on Windows)",
+              "sort_order": 22,
+              "content": "Mapping volumes on Windows can be tricky. If the approach shown in the course video doesn't work for you, consider the following suggestions:\n\n- Move your data to a directory without spaces. For example, move from `C:/Users/Alexey Grigorev/git/...` to `C:/git/...`.\n\n- Replace the `-v` part with one of these options:\n\n  ```bash\n  -v /c:/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data\n  -v //c:/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data\n  -v /c/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data\n  -v //c/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data\n  --volume //driveletter/path/ny_taxi_postgres_data/:/var/lib/postgresql/data\n  ```\n\n- Add `winpty` before the whole command:\n\n  ```bash\n  winpty docker run -it \\\n  -e POSTGRES_USER=\"root\" \\\n  -e POSTGRES_PASSWORD=\"root\" \\\n  -e POSTGRES_DB=\"ny_taxi\" \\\n  -v /c:/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data \\\n  -p 5432:5432 \\\n  postgres:1\n  ```\n\n- Try adding quotes:\n\n  ```bash\n  -v \"/c:/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data\"\n  -v \"//c:/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data\"\n  -v \u201c/c/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data\"\n  -v \"//c/some/path/ny_taxi_postgres_data:/var/lib/postgresql/data\"\n  -v \"c:\\some\\path\\ny_taxi_postgres_data\":/var/lib/postgresql/data\n  ```\n\n- Note: If Windows automatically creates a folder called `ny_taxi_postgres_data;C`, it suggests a problem with volume mapping. Try deleting both folders and replacing the `-v` part with other options. Using `//c/` instead of `/c/` might work, as it creates the correct folder `ny_taxi_postgres_data`.\n\n- A possible solution is using `\"$(pwd)\"/ny_taxi_postgres_data:/var/lib/postgresql/data` and pay attention to the placement of quotes.\n\n- If none of these work, use a volume name instead of the path:\n\n  ```bash\n  -v ny_taxi_postgres_data:/var/lib/postgresql/data\n  ```\n\n- For Mac, you can wrap `$(pwd)` with quotes:\n\n  ```bash\n  docker run -it \\\n  -e POSTGRES_USER=\"root\" \\\n  -e POSTGRES_PASSWORD=\"root\" \\\n  -e POSTGRES_DB=\"ny_taxi\" \\\n  -v \"$(pwd)\"/ny_taxi_postgres_data:/var/lib/postgresql/data \\\n  -p 5432:5432 \\\n  postgres:13\n  ```\n\nSource: [StackOverflow](https://stackoverflow.com/questions/48522615/docker-error-invalid-reference-format-repository-name-must-be-lowercase)",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/022_3e83372387_docker-invalid-reference-format-repository-name-mu.md"
+            },
+            {
+              "id": "0beb2b5df7",
+              "question": "Docker: \"permission denied\" error when creating a PostgreSQL Docker with a mounted volume on macOS M1",
+              "sort_order": 13,
+              "content": "When attempting to run a Docker command similar to the one below:\n\n```bash\ndocker run -it \\\n  -e POSTGRES_USER=\"root\" \\\n  -e POSTGRES_PASSWORD=\"root\" \\\n  -e POSTGRES_DB=\"ny_taxi\" \\\n  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \\\n  -p 5432:5432 \\\n  postgres:13\n```\n\nYou encounter the error message:\n\n```\ndocker: Error response from daemon: error while creating mount source path '/path/to/ny_taxi_postgres_data': chown /path/to/ny_taxi_postgres_data: permission denied.\n```\n\nSolution\n\n1. **Stop Rancher Desktop:**  \n   If you are using Rancher Desktop and face this issue, stop Rancher Desktop to resolve compatibility problems.\n\n2. **Install Docker Desktop:**  \n   Install Docker Desktop, ensuring that it is properly configured and has the required permissions.\n\n3. **Retry Docker Command:**  \n   Run the Docker command again after switching to Docker Desktop. This step resolves compatibility issues on some systems.\n\n**Note:** The issue occurred because Rancher Desktop was in use. Switching to Docker Desktop resolves compatibility problems and allows for the successful creation of PostgreSQL containers with mounted volumes for the New York Taxi Database on macOS M1.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/013_0beb2b5df7_docker-permission-denied-error-when-creating-a-pos.md"
+            },
+            {
+              "id": "ef201a0b0b",
+              "question": "Docker - Could not change permissions of directory \"/var/lib/postgresql/data\": Operation not permitted",
+              "sort_order": 21,
+              "content": "```bash\ndocker run -it \\\n  -e POSTGRES_USER=\"root\" \\\n  -e POSTGRES_PASSWORD=\"admin\" \\\n  -e POSTGRES_DB=\"ny_taxi\" \\\n  -v \"/mnt/path/to/ny_taxi_postgres_data\":\"/var/lib/postgresql/data\" \\\n  -p 5432:5432 \\\n  postgres:13\n```\n\n**Error Message:**\n\n```plaintext\nThe files belonging to this database system will be owned by user \"postgres\". \nThe database cluster will be initialized with locale \"en_US.utf8\". \nThe default database encoding has accordingly been set to \"UTF8\". \nData page checksums are disabled.\nfixing permissions on existing directory /var/lib/postgresql/data ...\ninitdb: error: could not change permissions of directory \"/var/lib/postgresql/data\": Operation not permitted\n```\n\n**Solution:**\n\n1. Create a local Docker volume and map it to the Postgres data directory `/var/lib/postgresql/data`.\n   \n   - The volume name `dtc_postgres_volume_local` must match in both commands below:\n\n    ```bash\n    docker volume create --name dtc_postgres_volume_local -d local\n    ```\n\n2. Run the Docker container using the created volume:\n\n    ```bash\n    docker run -it \\\n      -e POSTGRES_USER=\"root\" \\\n      -e POSTGRES_PASSWORD=\"root\" \\\n      -e POSTGRES_DB=\"ny_taxi\" \\\n      -v dtc_postgres_volume_local:/var/lib/postgresql/data \\\n      -p 5432:5432 \\\n      postgres:13\n    ```\n\n3. Verify the command works in Docker Desktop under Volumes. The `dtc_postgres_volume_local` should be listed, but the folder `ny_taxi_postgres_data` will be empty as an alternative configuration is used.\n\n**Alternate Error:**\n\n```plaintext\ninitdb: error: directory \"/var/lib/postgresql/data\" exists but is not empty\n```\n\nTo resolve this, either remove or empty the directory \"/var/lib/postgresql/data\", or run `initdb`.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/021_ef201a0b0b_docker-could-not-change-permissions-of-directory-v.md"
+            }
+          ],
+          "tool_call_id": "call_p4mLpQHHE2PX8c3Pp3ASURvF",
+          "metadata": null,
+          "timestamp": "2025-10-12T05:39:13.145932+00:00",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": "You are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "content": "When using PostgreSQL in Docker, you can use the following mount path for your database storage:\n\n1. On Windows, it's recommended to use one of the following options for your volume mapping:\n   ```bash\n   -v /e/zoomcamp/...:/var/lib/postgresql/data\n   ```\n   Or\n   ```bash\n   -v /c:/.../ny_taxi_postgres_data:/var/lib/postgresql/data\n   ```\n   Note: Include a leading slash in front of `c:` to avoid any issues.\n\n2. If you're working on macOS, you can use a command similar to this:\n   ```bash\n   docker run -it \\\n     -e POSTGRES_USER=\"root\" \\\n     -e POSTGRES_PASSWORD=\"root\" \\\n     -e POSTGRES_DB=\"ny_taxi\" \\\n     -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \\\n     -p 5432:5432 \\\n     postgres:13\n   ```\n   Make sure the directory `ny_taxi_postgres_data` exists at the same level as your current working directory.\n\n3. Alternatively, for both Windows and macOS, you can create a Docker volume and map it:\n   ```bash\n   docker volume create --name dtc_postgres_volume_local\n   docker run -it \\\n     -e POSTGRES_USER=\"root\" \\\n     -e POSTGRES_PASSWORD=\"root\" \\\n     -e POSTGRES_DB=\"ny_taxi\" \\\n     -v dtc_postgres_volume_local:/var/lib/postgresql/data \\\n     -p 5432:5432 \\\n     postgres:13\n   ```\n\nThese configurations help ensure that your PostgreSQL data is persisted correctly and that you avoid permission issues related to mounting directories. \n\nFor more detailed troubleshooting or additional recommendations, you can refer to the original sources:\n- [Mounting Error in Docker Compose](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-1/037_3f1c2f93bd_docker-compose-mounting-error.md)\n- [Invalid Mode Error in Docker](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-1/023_fb9fab513f_docker-error-response-from-daemon-invalid-mode-pro.md)",
+          "id": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 2497,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 487,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-12T05:39:13+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "stop"
+      },
+      "provider_response_id": "chatcmpl-CPj5VEwo4V5N2QdYc85sDINwhehD8",
+      "finish_reason": "stop"
+    }
+  ],
+  "source": "ai-generated"
+}

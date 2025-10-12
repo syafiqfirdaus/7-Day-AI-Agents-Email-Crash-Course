@@ -1,0 +1,142 @@
+{
+  "agent_name": "gh_agent",
+  "system_prompt": [
+    "\nYou are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.\n"
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "How do I configure Terraform on Windows 10 using WSL?",
+          "timestamp": "2025-10-12T03:55:30.392511+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": "You are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "search",
+          "args": "{\"query\":\"configure Terraform Windows 10 WSL\"}",
+          "tool_call_id": "call_Oydj2CmfhzKUgv705WYQRRtd",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 215,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 19,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-12T03:55:30+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "tool_calls"
+      },
+      "provider_response_id": "chatcmpl-CPhT8RZmqTBD8Xizgjl4MufIDAhet",
+      "finish_reason": "tool_call"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "search",
+          "content": [
+            {
+              "id": "a5a163f51d",
+              "question": "Terraform: Install for WSL",
+              "sort_order": 116,
+              "content": "You can configure Terraform on Windows 10 using the Linux Subsystem (WSL) by following this guide: [Configuring Terraform on Windows 10 Linux Subsystem](https://techcommunity.microsoft.com/t5/azure-developer-community-blog/configuring-terraform-on-windows-10-linux-sub-system/ba-p/393845).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/116_a5a163f51d_terraform-install-for-wsl.md"
+            },
+            {
+              "id": "3549528659",
+              "question": "Docker: Docker won't start or is stuck in settings (Windows 10 / 11)",
+              "sort_order": 15,
+              "content": "Ensure you are running the latest version of Docker for Windows. Download the updated version from [Docker's official site](https://docs.docker.com/desktop/install/windows-install/). If the upgrade option in the menu doesn't work, uninstall and reinstall with the latest version.\n\nIf Docker is stuck on starting, try switching the containers by right-clicking the [docker symbol](https://imgur.com/vsVUAzK) from the running programs, and switch the containers from Windows to Linux or vice versa.\n\nFor Windows 10 / 11 Pro Edition:\n\n- **Hyper-V Backend:** ensure Hyper-V is enabled by following this [tutorial](https://www.c-sharpcorner.com/article/install-and-configured-docker-desktop-in-windows-10/).\n- **WSL2 Backend:** follow the steps detailed in this [tutorial](https://pureinfotech.com/install-wsl-windows-11/).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/015_docker-docker-wont-start-or.md"
+            },
+            {
+              "id": "76f95c1d28",
+              "question": "Terraform: Terraform initialized in an empty directory! The directory has no Terraform configuration files. You may begin working with Terraform immediately by creating Terraform configuration files.",
+              "sort_order": 122,
+              "content": "This error occurs when `terraform init` is run outside the working directory.\n\nTo resolve this issue:\n\n1. Navigate to the working directory that contains your Terraform configuration files.\n2. Run the `terraform init` command inside the correct directory.\n\nMake sure your configuration files (e.g., .tf files) are present in the directory before running the command.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/122_76f95c1d28_terraform-terraform-initialized-in-an-empty-direct.md"
+            },
+            {
+              "id": "46dbe4810d",
+              "question": "Docker - error during connect: In the default daemon configuration on Windows, the docker client must be run with elevated privileges",
+              "sort_order": 11,
+              "content": "If you get this error:\n\n```\ndocker: error during connect: In the default daemon configuration on Windows, the docker client must be run with elevated privileges to connect.: Post \"http://%2F%2F.%2Fpipe%2Fdocker_engine/v1.24/containers/create\": open //./pipe/docker_engine: The system cannot find the file specified.\nSee 'docker run --help'.\n```\n\nTo resolve it on Windows, follow these guidelines based on your version:\n\n**Windows 10 Pro / 11 Pro Users**:\n\n* Ensure Hyper-V is enabled, as Docker can use it as a backend.\n* Follow the [Enable Hyper-V Option on Windows 10 / 11](https://www.c-sharpcorner.com/article/install-and-configured-docker-desktop-in-windows-10/) tutorial.\n\n**Windows 10 Home / 11 Home Users**:\n\n* The 'Home' version doesn't support Hyper-V, so use WSL2 (Windows Subsystem for Linux).\n* Refer to [install WSL on Windows 11](https://pureinfotech.com/install-wsl-windows-11/) for detailed instructions.\n\nIf you encounter the \"WslRegisterDistribution failed with error: 0x800701bc\" error:\n\n- Update the WSL2 Linux Kernel by following the guidelines at [GitHub: WSL Issue 5393](https://github.com/microsoft/WSL/issues/5393).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/011_46dbe4810d_docker-error-during-connect-in-the-default-daemon.md"
+            },
+            {
+              "id": "d0f76f4669",
+              "question": "Terraform: Where can I find the Terraform 1.1.3 Linux (AMD 64)?",
+              "sort_order": 121,
+              "content": "Here: [https://releases.hashicorp.com/terraform/1.1.3/terraform_1.1.3_linux_amd64.zip](https://releases.hashicorp.com/terraform/1.1.3/terraform_1.1.3_linux_amd64.zip)",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/121_d0f76f4669_terraform-where-can-i-find-the-terraform-113-linux.md"
+            }
+          ],
+          "tool_call_id": "call_Oydj2CmfhzKUgv705WYQRRtd",
+          "metadata": null,
+          "timestamp": "2025-10-12T03:55:31.210417+00:00",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": "You are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "content": "To configure Terraform on Windows 10 using Windows Subsystem for Linux (WSL), you can follow these steps:\n\n1. **Install WSL**: Ensure that Windows Subsystem for Linux is installed on your Windows 10 machine. You can follow detailed instructions for installation [here](https://pureinfotech.com/install-wsl-windows-11/).\n\n2. **Install Terraform**: Once WSL is set up, open your WSL terminal and download Terraform. You can get the latest version of Terraform for Linux from the HashiCorp releases page, or you can use the following command to download and install Terraform directly:\n\n   ```bash\n   wget https://releases.hashicorp.com/terraform/{version}/terraform_{version}_linux_amd64.zip\n   unzip terraform_{version}_linux_amd64.zip\n   sudo mv terraform /usr/local/bin/\n   ```\n\n   Replace `{version}` with the desired version number (e.g., 1.1.3).\n\n3. **Verify Installation**: After installing, verify that Terraform is installed successfully by running the following command in your WSL terminal:\n\n   ```bash\n   terraform -version\n   ```\n\n4. **Start Using Terraform**: You can start creating your Terraform configuration files and using Terraform commands like `terraform init`, `terraform plan`, and `terraform apply`.\n\nFor detailed guidance, you can refer to the [Configuring Terraform on Windows 10 Linux Subsystem](https://techcommunity.microsoft.com/t5/azure-developer-community-blog/configuring-terraform-on-windows-10-linux-sub-system/ba-p/393845) document.\n\nYou can also refer to specific Terraform installation details for WSL in the following source: [Terraform: Install for WSL](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-1/116_a5a163f51d_terraform-install-for-wsl.md).",
+          "id": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 1328,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 398,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-12T03:55:31+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "stop"
+      },
+      "provider_response_id": "chatcmpl-CPhT9eYAl7xrX51rXCLDhfOa1seIx",
+      "finish_reason": "stop"
+    }
+  ],
+  "source": "ai-generated"
+}

@@ -1,0 +1,142 @@
+{
+  "agent_name": "gh_agent",
+  "system_prompt": [
+    "\nYou are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.\n"
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "What type error can occur when defining a schema for a Spark DataFrame using a Parquet file, and how can I resolve it?",
+          "timestamp": "2025-10-12T03:55:41.756086+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": "You are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "search",
+          "args": "{\"query\":\"Spark DataFrame schema error Parquet file\"}",
+          "tool_call_id": "call_AU39SgD32V38vkbAU275uxHK",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 229,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 20,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-12T03:55:41+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "tool_calls"
+      },
+      "provider_response_id": "chatcmpl-CPhTJsj0F3Q3mvNX58v5ffdGjJcBg",
+      "finish_reason": "tool_call"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "search",
+          "content": [
+            {
+              "id": "3e355d74fd",
+              "question": "DataType error when creating Spark DataFrame with a specified schema?",
+              "sort_order": 27,
+              "content": "When defining the schema for a Spark DataFrame, you might encounter a data type error if you're using a Parquet file with the schema definition from the TLC example. The error occurs because the `PULocationID` and `DOLocationID` columns are defined as `IntegerType`, but the Parquet file uses `INT64`.\n\nYou'll get an error like:\n\n```plaintext\nParquet column cannot be converted in file [...] Column [...] Expected: int, Found: INT64\n```\n\nTo resolve this issue:\n\n- Change the schema definition from `IntegerType` to `LongType`. This adjustment should align the expected and actual data types, allowing the DataFrame to be created successfully.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/027_3e355d74fd_datatype-error-when-creating-spark-dataframe-with.md"
+            },
+            {
+              "id": "9b3ee420d4",
+              "question": "AttributeError: 'DataFrame' object has no attribute 'iteritems'",
+              "sort_order": 29,
+              "content": "This error occurs in the Spark video 5.3.1 - First Look at Spark/PySpark because the example utilizes CSV files from 2021, but the current data is in parquet format.\n\nWhen running the command:\n\n```python\nspark.createDataFrame(df1_pandas).show()\n```\n\nYou may encounter the Attribute error due to incompatibility between pandas version 2.0.0 and Spark 3.3.2. To resolve this, you can:\n\n- Downgrade pandas to version 1.5.3 using the following command:\n  \n  ```bash\n  pip install -U pandas==1.5.3\n  ```\n  \n- Alternatively, add the following line after importing pandas if you prefer not to downgrade:\n  \n  ```python\n  pd.DataFrame.iteritems = pd.DataFrame.items\n  ```\n\nThis issue is resolved in Spark versions from 3.4.1 onwards.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/029_9b3ee420d4_attributeerror-dataframe-object-has-no-attribute-i.md"
+            },
+            {
+              "id": "8585d2d7f4",
+              "question": "Taxi Data: Unzip Parquet file",
+              "sort_order": 4,
+              "content": "You can unzip the downloaded parquet file from the command line. The result is a CSV file which can be imported with pandas using `pd.read_csv()` as shown in the videos.\n\n```bash\ngunzip green_tripdata_2019-09.csv.gz\n```\n\n### Solution for Using Parquet Files Directly in Python Script `ingest_data.py`\n\n1. In the `def main(params)`, add this line:\n   \n   ```python\n   parquet_name = 'output.parquet'\n   ```\n\n2. Edit the code which downloads the files:\n\n   ```python\n   os.system(f\"wget {url} -O {parquet_name}\")\n   ```\n\n3. Convert the downloaded `.parquet` file to CSV and rename it to `csv_name` to keep it relevant to the rest of the code:\n\n   ```python\n   df = pd.read_parquet(parquet_name)\n   df.to_csv(csv_name, index=False)\n   ```",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-1/004_8585d2d7f4_taxi-data-unzip-parquet-file.md"
+            },
+            {
+              "id": "6e251d34b6",
+              "question": "How can I read a small number of rows from the parquet file directly?",
+              "sort_order": 26,
+              "content": "To read a small number of rows from a parquet file, you can use PyArrow or Apache Spark:\n\n### Using PyArrow\n\n```python\nfrom pyarrow.parquet import ParquetFile\n\npf = ParquetFile('fhvhv_tripdata_2021-01.parquet')\n\n# PyArrow builds tables, not dataframes\n\ntbl_small = next(pf.iter_batches(batch_size=1000))\n\n# Convert the table to a DataFrame\n\ndf = tbl_small.to_pandas()\n```\n\n### Alternatively, without PyArrow\n\n```python\ndf = spark.read.parquet('fhvhv_tripdata_2021-01.parquet')\n\ndf1 = df.sort('DOLocationID').limit(1000)\n\npdf = df1.select(\"*\").toPandas()\n```",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/026_6e251d34b6_how-can-i-read-a-small-number-of-rows-from-the-par.md"
+            },
+            {
+              "id": "58586a16a6",
+              "question": "DBT: Why changing the target schema to \u201cmarts\u201d actually creates a schema named \u201cdbt_marts\u201d instead?",
+              "sort_order": 41,
+              "content": "It is a default behavior of dbt to [append custom schema to the initial schema](https://docs.getdbt.com/docs/build/custom-schemas#why-does-dbt-concatenate-the-custom-schema-to-the-target-schema). To override this behavior, create a macro named `generate_schema_name.sql`:\n\n```sql\n{% macro generate_schema_name(custom_schema_name, node) -%}\n\n{%- set default_schema = target.schema -%}\n\n{%- if custom_schema_name is none -%}\n\n{{ default_schema }}\n\n{%- else -%}\n\n{{ custom_schema_name | trim }}\n\n{%- endif -%}\n\n{%- endmacro %}\n```\n\nNow you can override the default custom schema in `dbt_project.yml`.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-4/041_58586a16a6_dbt-why-changing-the-target-schema-to-marts-actual.md"
+            }
+          ],
+          "tool_call_id": "call_AU39SgD32V38vkbAU275uxHK",
+          "metadata": null,
+          "timestamp": "2025-10-12T03:55:42.681958+00:00",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": "You are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "content": "When defining a schema for a Spark DataFrame using a Parquet file, a common type error you might encounter is related to mismatched data types. For instance, if you specify certain columns in your schema as `IntegerType`, but the actual data in the Parquet file uses `INT64`, you may receive an error indicating that the expected type does not match the found type.\n\n### Example of the Error\nYou might see an error message similar to:\n```\nParquet column cannot be converted in file [...] Column [...] Expected: int, Found: INT64\n```\n\n### Resolution\nTo resolve this issue, you should adjust the schema definition. Instead of using `IntegerType`, you can use `LongType`, which corresponds correctly to the `INT64` type in the Parquet file. This change should help align the expected and actual data types, allowing your DataFrame to be created without errors.\n\nFor example, modify your schema as follows:\n```python\nfrom pyspark.sql.types import StructType, StructField, LongType\n\nschema = StructType([\n    StructField(\"PULocationID\", LongType(), True),\n    StructField(\"DOLocationID\", LongType(), True),\n    # additional fields...\n])\n```\n\nThis adjustment should fix the type error you are experiencing. \n\nFor more information, you can reference the original source: [DataType error when creating Spark DataFrame with a specified schema](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-5/027_3e355d74fd_datatype-error-when-creating-spark-dataframe-with.md).",
+          "id": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 1561,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 338,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-12T03:55:43+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "stop"
+      },
+      "provider_response_id": "chatcmpl-CPhTLQXCV5yO9jISTrLTvMBzwAFwp",
+      "finish_reason": "stop"
+    }
+  ],
+  "source": "ai-generated"
+}

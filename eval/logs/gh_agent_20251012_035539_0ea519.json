@@ -1,0 +1,142 @@
+{
+  "agent_name": "gh_agent",
+  "system_prompt": [
+    "\nYou are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.\n"
+  ],
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "tools": [
+    "search"
+  ],
+  "messages": [
+    {
+      "parts": [
+        {
+          "content": "Why doesn't the documentation generate when I run models in the development environment?",
+          "timestamp": "2025-10-12T03:55:37.566843+00:00",
+          "part_kind": "user-prompt"
+        }
+      ],
+      "instructions": "You are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "search",
+          "args": "{\"query\":\"documentation not generated models development environment\"}",
+          "tool_call_id": "call_dvpWmUBC74350OO9dgGurVNv",
+          "part_kind": "tool-call"
+        }
+      ],
+      "usage": {
+        "input_tokens": 216,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 18,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-12T03:55:38+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "tool_calls"
+      },
+      "provider_response_id": "chatcmpl-CPhTGYeQrzlDAlXNh07zoloohXy3Y",
+      "finish_reason": "tool_call"
+    },
+    {
+      "parts": [
+        {
+          "tool_name": "search",
+          "content": [
+            {
+              "id": "29469cf158",
+              "question": "Setup: No development environment",
+              "sort_order": 6,
+              "content": "Error:\n\n```plaintext\nThis project does not have a development environment configured. Please create a development environment and configure your development credentials to use the dbt IDE.\n```\n\nThe error message provides guidance on resolving this issue. Follow the guide in the [dbt cloud setup documentation](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/04-analytics-engineering/dbt_cloud_setup.md). Additional instructions can be found in the [video @1:42](https://youtu.be/J0XCDyKiU64?si=2CTg3H63wyJTf5Vy&t=102).",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-4/006_29469cf158_setup-no-development-environment.md"
+            },
+            {
+              "id": "98b6a15ece",
+              "question": "Documentation or book sign not shown even after doing `dbt docs generate`.",
+              "sort_order": 1,
+              "content": "In the free version, it does not show the docs when models are run in the development environment. Create a production job and tick the 'generate docs' section. Execute it, and it will generate the documentation.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-5/001_98b6a15ece_documentation-or-book-sign-not-shown-even-after-do.md"
+            },
+            {
+              "id": "78fda262c6",
+              "question": "How does dbt handle dependencies between models?",
+              "sort_order": 79,
+              "content": "Dbt provides a mechanism called `ref` to manage dependencies between models. By referencing other models using the `ref` keyword in SQL, dbt automatically understands the dependencies and ensures the correct execution order.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-4/079_78fda262c6_how-does-dbt-handle-dependencies-between-models.md"
+            },
+            {
+              "id": "dfd4ddbf39",
+              "question": "Setup: I\u2019ve set Github and Bigquery to dbt successfully. Why nothing showed in my Develop tab?",
+              "sort_order": 61,
+              "content": "Before you can develop some data model on dbt, you should:\n\n1. **Create a Development Environment:** Ensure that your development environment is properly configured.\n   \n2. **Set Parameters:** Specify necessary parameters within the environment.\n   \nOnce the model has been developed, also create a deployment environment to create and run jobs.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-4/061_dfd4ddbf39_setup-ive-set-github-and-bigquery-to-dbt-successfu.md"
+            },
+            {
+              "id": "ee3f7f89ba",
+              "question": "Made change to your modeling files and commit to your development branch, but Job still runs on old file?",
+              "sort_order": 60,
+              "content": "Switch to the main branch and make a pull request from the development branch. This will take you to GitHub. Approve the merge and rerun your job; it should work as planned now.",
+              "filename": "faq-main/_questions/data-engineering-zoomcamp/module-4/060_ee3f7f89ba_made-change-to-your-modeling-files-and-commit-to-y.md"
+            }
+          ],
+          "tool_call_id": "call_dvpWmUBC74350OO9dgGurVNv",
+          "metadata": null,
+          "timestamp": "2025-10-12T03:55:38.833586+00:00",
+          "part_kind": "tool-return"
+        }
+      ],
+      "instructions": "You are a helpful assistant that answers questions about documentation.  \n\nUse the search tool to find relevant information from the course materials before answering questions.  \n\nIf you can find specific information through search, use it to provide accurate answers.\n\nAlways include references by citing the filename of the source material you used.\nReplace it with the full path to the GitHub repository:\n\"https://github.com/DataTalksClub/faq/blob/main/\"\nFormat: [LINK TITLE](FULL_GITHUB_LINK)\n\n\nIf the search doesn't return relevant results, let the user know and provide general guidance.",
+      "kind": "request"
+    },
+    {
+      "parts": [
+        {
+          "content": "The reason why documentation does not generate when you run models in the development environment is that, in the free version of the tool, the documentation is not displayed when models are executed in that environment. To generate the documentation, you need to create a production job and select the 'generate docs' option. Once you execute this job, it will produce the documentation as expected.\n\nFor more details, you can refer to the specific section on this topic in the FAQ documentation: [Documentation not generated](https://github.com/DataTalksClub/faq/blob/main/faq-main/_questions/data-engineering-zoomcamp/module-5/001_98b6a15ece_documentation-or-book-sign-not-shown-even-after-do.md).",
+          "id": null,
+          "part_kind": "text"
+        }
+      ],
+      "usage": {
+        "input_tokens": 924,
+        "cache_write_tokens": 0,
+        "cache_read_tokens": 0,
+        "output_tokens": 147,
+        "input_audio_tokens": 0,
+        "cache_audio_read_tokens": 0,
+        "output_audio_tokens": 0,
+        "details": {
+          "accepted_prediction_tokens": 0,
+          "audio_tokens": 0,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "model_name": "gpt-4o-mini-2024-07-18",
+      "timestamp": "2025-10-12T03:55:39+00:00",
+      "kind": "response",
+      "provider_name": "openai",
+      "provider_details": {
+        "finish_reason": "stop"
+      },
+      "provider_response_id": "chatcmpl-CPhTHBlg0HPlPkNiWCNjxXGHVYLo6",
+      "finish_reason": "stop"
+    }
+  ],
+  "source": "ai-generated"
+}

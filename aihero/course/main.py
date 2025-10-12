@@ -5,6 +5,9 @@ import ingest
 import search_agent 
 import logs
 import asyncio
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 REPO_OWNER = "DataTalksClub"

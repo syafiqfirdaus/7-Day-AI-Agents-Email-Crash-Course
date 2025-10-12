@@ -5,6 +5,10 @@
 
 An AI-powered FAQ assistant that can answer questions about a course, using materials from a GitHub repository. This project is the result of the "7-Day AI Agents Email Crash Course" by Alexey Grigorev.
 
+## Demo
+
+![Demo Screenshot](Demo%20Screenshort.png)
+
 ## Overview
 
 This project is a comprehensive, step-by-step guide to building a Retrieval-Augmented Generation (RAG) based AI agent. It addresses the common problem of answering user questions based on a specific knowledge base, in this case, the content of a public GitHub repository containing markdown files.
@@ -94,9 +98,62 @@ Contributions are welcome! If you have suggestions for improvements, please open
 5.  Push to the branch (`git push origin feature/your-feature-name`).
 6.  Open a pull request.
 
+## Evaluation
+
+This project includes a comprehensive evaluation system to assess the agent's performance using LLM-as-a-judge methodology.
+
+### Evaluation Framework
+
+The evaluation system consists of two main components:
+
+1.  **Data Generation** ([eval/data-gen.ipynb](eval/data-gen.ipynb))
+    *   Automatically generates test questions from FAQ content using AI
+    *   Runs the agent on generated questions
+    *   Logs all interactions for evaluation
+
+2.  **Evaluation Logic** ([eval/evaluations.ipynb](eval/evaluations.ipynb))
+    *   Uses an LLM as a judge to evaluate agent responses
+    *   Assesses quality based on a comprehensive checklist:
+        *   **instructions_follow**: Agent followed user instructions
+        *   **instructions_avoid**: Agent avoided prohibited actions
+        *   **answer_relevant**: Response addresses the question
+        *   **answer_clear**: Answer is clear and correct
+        *   **answer_citations**: Proper citations included
+        *   **completeness**: Response covers all key aspects
+        *   **tool_call_search**: Search tool was invoked
+    *   Generates metrics and pass rates
+    *   Exports results to CSV for analysis
+
+### Evaluation Metrics
+
+The evaluation framework measures:
+
+*   **Pass Rate per Check**: Percentage of interactions passing each quality criterion
+*   **Overall Pass Rate**: Average across all evaluation criteria
+*   **Hit Rate**: Percentage of queries returning relevant results
+*   **MRR (Mean Reciprocal Rank)**: Position of first relevant result
+
+### Running Evaluations
+
+To run the evaluation:
+
+1.  Generate test data:
+
+    ```bash
+    jupyter notebook eval/data-gen.ipynb
+    ```
+
+2.  Evaluate agent responses:
+
+    ```bash
+    jupyter notebook eval/evaluations.ipynb
+    ```
+
+Results are saved to `logs/evaluation_results.csv` for further analysis.
+
 ## Tests
 
-Currently, there are no automated tests in this project. Adding a test suite would be a great contribution!
+Currently, there are no automated unit tests in this project. The evaluation system serves as an integration test for the agent's behavior. Adding a traditional test suite would be a great contribution!
 
 ## Credits and Acknowledgments
 
